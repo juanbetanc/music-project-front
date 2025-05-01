@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useLoginMutation } from '@/features/auth/authApi'
 import { loginSchema } from '@/schemas/auth/login'
@@ -56,23 +56,26 @@ const Login = () => {
     }
 
     return (
-        <div className="min-h-screen bg-white flex justify-center items-center px-4 py-8 overflow-hidden">
-            <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-md border border-gray-200 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-                <h2 className="text-2xl font-bold text-center text-blue-600 mb-6 animate-fade-in">Login</h2>
+        <div className="min-h-screen bg-gray-50 flex justify-center items-center px-4 py-12 sm:px-6 lg:px-8">
+            <div className="w-full max-w-md bg-white p-10 rounded-2xl shadow-xl border border-gray-100 transform transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl">
+                <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Iniciar Sesión</h2>
 
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
                             control={form.control}
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="text-gray-600 transform transition duration-300 group-hover:translate-x-1">Email</FormLabel>
+                                    <FormLabel className="text-sm font-medium text-gray-700">Correo Electrónico</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Email" {...field} className="border border-gray-300 focus:border-blue-500 focus:ring-blue-500 transition-all duration-200 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+                                        <Input 
+                                            placeholder="ejemplo@correo.com" 
+                                            {...field} 
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
+                                        />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage className="text-red-500 text-sm" />
                                 </FormItem>
                             )}
                         />
