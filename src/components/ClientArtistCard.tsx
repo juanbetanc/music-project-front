@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import Image from 'next/image'
+import { cn } from '@/lib/utils'
 
 import { ClientComponents } from './ClientComponents'
 import { ArtistSchema } from '@/schemas/artists/artistsSchema'
@@ -11,43 +13,62 @@ import { ArtistSchema } from '@/schemas/artists/artistsSchema'
 export function ClientArtistCard({ artist }: { artist: ArtistSchema }) {
   return (
     <ClientComponents>
-      <Card className="transition-all duration-200 hover:shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold mb-2">
-            {artist.name}
-          </CardTitle>
-          <div className="flex items-center gap-2">
-            {artist.genres && artist.genres[0] ? (
-              <Badge variant="outline">{artist.genres[0].name}</Badge>
-            ) : (
-              <Badge variant="outline">Genre not specified</Badge>
-            )}
-            {/* <div className="flex items-center">
-              <span className="text-yellow-400">⭐</span>
-              <span className="ml-1">{artist.rating}</span>
-              <span className="text-gray-500">({artist.reviews})</span>
-            </div> */}
+      <Card className="transition-all duration-200 hover:shadow-lg hover:scale-[1.02] p-0">
+        <div className="relative w-full h-[200px] overflow-hidden">
+          <Image
+            src={artist.profilePicture}
+            alt={artist.name}
+            fill            
+            className="object- rounded-t-lg "
+            priority
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+            <CardTitle className="text-2xl font-bold text-white mb-2">
+              {artist.name}
+            </CardTitle>
+            <div className="flex flex-wrap gap-2">
+              {artist.genres?.map((genre, index) => (
+                <Badge 
+                  key={index} 
+                  variant="secondary" 
+                  className="text-sm"
+                >
+                  {genre.name}
+                </Badge>
+              ))}
+            </div>
           </div>
-        </CardHeader>
-        <CardContent>
-          <p className="text-gray-600 mb-4">{artist.description}</p>
-          <div className="flex justify-between items-center">            
-            <Button variant="outline" className="text-blue-600 hover:bg-blue-50">
-              Ver detalles
-            </Button>
+        </div>
+        <CardContent className="pb-4">
+          <div className="space-y-4">
+            <p className="text-gray-600 leading-relaxed">{artist.description}</p>
+            {artist.city?.name || artist.country?.name ? (
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <span>📍</span>
+                <span>
+                  {artist.city?.name} {artist.country?.name ? `, ${artist.country.name}` : ''}
+                </span>
+              </div>
+            ) : null}
+            <div className="flex justify-between items-center">
+              <Button 
+                variant="outline" 
+                className="text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              >
+                Ver detalles
+              </Button>
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                  <span className="text-lg font-semibold">{artist.user?.email[0]}</span>
+                </div>
+                <div>
+                  <span className="font-medium">{artist.user?.email}</span>
+                  <p className="text-xs text-gray-500">Proveedor certificado</p>
+                </div>
+              </div>
+            </div>
           </div>
         </CardContent>
-        <CardFooter>
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-              <span className="text-lg font-semibold">{artist.user?.email[0]}</span>
-            </div>
-            <div>
-              <span className="font-medium">{artist.user?.email}</span>
-              <p className="text-sm text-gray-500">Proveedor certificado</p>
-            </div>
-          </div>
-        </CardFooter>
       </Card>
     </ClientComponents>
   )

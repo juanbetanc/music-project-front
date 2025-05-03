@@ -4,6 +4,7 @@ export const artistSchema = z.object({
     idArtist: z.string().trim().uuid(),
     name: z.string().min(3),
     description: z.string().min(10),
+    profilePicture: z.string().url(),
     genres: z.array(z.object({
         name: z.string().min(3),
     })).optional(),
