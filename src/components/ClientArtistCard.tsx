@@ -18,7 +18,7 @@ export function ClientArtistCard({ artist }: { artist: ArtistSchema }) {
           <Image
             src={artist.profilePicture}
             alt={artist.name}
-            fill            
+            fill
             className="object- rounded-t-lg "
             priority
           />
@@ -28,9 +28,9 @@ export function ClientArtistCard({ artist }: { artist: ArtistSchema }) {
             </CardTitle>
             <div className="flex flex-wrap gap-2">
               {artist.genres?.map((genre, index) => (
-                <Badge 
-                  key={index} 
-                  variant="secondary" 
+                <Badge
+                  key={index}
+                  variant="secondary"
                   className="text-sm"
                 >
                   {genre.name}
@@ -39,9 +39,12 @@ export function ClientArtistCard({ artist }: { artist: ArtistSchema }) {
             </div>
           </div>
         </div>
-        <CardContent className="pb-4">
-          <div className="space-y-4">
-            <p className="text-gray-600 leading-relaxed">{artist.description}</p>
+        <CardContent className="pb-4 mt-0">
+          <div className="space-y-4 max-h-[200px] overflow-hidden">
+            <div className="relative h-[80px]">
+              <p className="text-gray-600 leading-relaxed mb-2 line-clamp-3">{artist.description}</p>
+              <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+            </div>
             {artist.city?.name || artist.country?.name ? (
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <span>📍</span>
@@ -51,21 +54,24 @@ export function ClientArtistCard({ artist }: { artist: ArtistSchema }) {
               </div>
             ) : null}
             <div className="flex justify-between items-center">
-              <Button 
-                variant="outline" 
-                className="text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors"
-              >
-                Ver detalles
-              </Button>
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
                   <span className="text-lg font-semibold">{artist.user?.email[0]}</span>
                 </div>
                 <div>
-                  <span className="font-medium">{artist.user?.email}</span>
+                  <div className="relative">
+                    <span className="font-medium inline-block max-w-[150px] truncate">{artist.user?.email}</span>
+                    <div className="absolute right-0 top-0 h-4 w-4 bg-gradient-to-l from-white to-transparent"></div>
+                  </div>
                   <p className="text-xs text-gray-500">Proveedor certificado</p>
                 </div>
               </div>
+              <Button
+                variant="outline"
+                className="text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              >
+                Ver detalles
+              </Button>
             </div>
           </div>
         </CardContent>
